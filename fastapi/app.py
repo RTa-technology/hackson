@@ -8,6 +8,9 @@ import json
 import os
 from os.path import join, dirname
 
+import numpy as np
+
+
 from dotenv import load_dotenv
 import uvicorn
 
@@ -61,13 +64,14 @@ async def handle_events_image(flag, original_image_url, preview_image_url):
         # エラーログ書いたりする
         pass
 
-@app.post("/send")
-async def send(upload_file:UploadFile): 
-    # 🌟イベント処理をバックグラウンドタスクに渡す
-    
-    filelink = upload_image(upload_file)
+# octet-streamで送られてくる画像を受け取る
+@app.post("/send/{flag}")
+async def send(request: Request, flag: int): 
+    _bytes = np.frombuffer(request.data, np.uint8)
+    img = cv2.imdecode(_bytes, flags=cv2.IMREAD_COLOR)
+
+    filelink = upload_image(img)
     print(filelink)
-    flag = int(upload_file.filename.split(".")[0])
     await handle_events_image(flag, filelink, filelink)
 
 if __name__ == "__main__":
