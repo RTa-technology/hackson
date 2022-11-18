@@ -1,10 +1,8 @@
 FROM python:3.9-alpine
 
-RUN apt-get update
+RUN apk update
 
-RUN apt-get upgrade -y
-
-RUN apt-get install -y build-essential cmake git unzip pkg-config libjpeg-dev libpng-dev libtiff-dev
+RUN apk add  build-essential cmake git unzip pkg-config libjpeg-dev libpng-dev libtiff-dev  g++ git
 
 RUN pip install opencv-python opencv-contrib-python
 
