@@ -9,6 +9,7 @@ import os
 from os.path import join, dirname
 
 from dotenv import load_dotenv
+import uvicorn
 
 load_dotenv(verbose=True)
 
@@ -68,3 +69,6 @@ async def send(upload_file:UploadFile):
     print(filelink)
     flag = int(upload_file.filename.split(".")[0])
     await handle_events_image(flag, filelink, filelink)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
