@@ -137,5 +137,5 @@ token
 !pyrightconfig.json
 *.sqlite3
 *.ipynb
-.env.*
+.env
 discord.log*

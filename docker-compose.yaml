@@ -1,0 +1,18 @@
+version: "1.0.0"
+
+services:
+  jupyter:
+    build:
+      context: ./notebooks
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+      - "6006:6006"
+    environment:
+      - PASSWORD=password
+      - OPT_VIDEO="" ; [ -e /dev/video0 ]
+      - OPT_VIDEO='--privileged -v /dev/video0:/dev/video0'
+    volumes:
+      - ./notebooks:/notebooks
+    restart:
+      always
