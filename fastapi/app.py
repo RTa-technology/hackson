@@ -30,10 +30,10 @@ app = FastAPI()
 
 
 # 画像アップロード
-def upload_image(file:UploadFile):
+def upload_image(file):
     # 一時的に保存
     with open("image.jpg", "wb") as f:
-        f.write(file.file.read())
+        f.write(file.read())
     # アップロード
     image = imgur_client.upload_from_path("image.jpg", anon=True)
     # 一時的に保存した画像を削除
@@ -74,6 +74,15 @@ async def send(request: Request, flag: int):
 
     _bytes = np.frombuffer(body, np.uint8)
     img = cv2.imdecode(_bytes, flags=cv2.IMREAD_COLOR)
+    
+    # 画像を一時的に保存
+
+    cv2.imwrite(str(flag)+".jpg", img)
+
+    # 画像をアップロード
+    filelink = upload_image(open(str(flag)+".jpg", "rb"))
+
+
 
     filelink = upload_image(img)
     print(filelink)
