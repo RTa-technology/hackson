@@ -14,9 +14,11 @@ RUN apk add --no-cache --virtual .build-deps \
     wget \
     && pip install --upgrade pip \
     && pip install --upgrade setuptools \
-    && pip install --upgrade wheel \
-    && pip install --upgrade numpy \
-    && pip install --upgrade opencv-python \
-    && apk del .build-deps
+    && pip install --upgrade wheel 
+
+RUN pip install opencv-python numpy
+
+RUN apk del .build-deps
+
 
 CMD [ "python", "main.py" ]
