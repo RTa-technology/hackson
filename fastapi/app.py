@@ -81,10 +81,6 @@ async def send(request: Request, flag: int):
 
     # 画像をアップロード
     filelink = upload_image(open(str(flag)+".jpg", "rb"))
-
-
-
-    filelink = upload_image(img)
     print(filelink)
     await handle_events_image(flag, filelink, filelink)
 
