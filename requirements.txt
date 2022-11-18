@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+aiolinebot
+line-bot-sdk
+python-dotenv
+imgurpython
+python-multipart
