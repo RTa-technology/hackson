@@ -47,6 +47,9 @@ while True:
 
     cv2.imshow('MotionDetected Area Frame', areaframe)
     # キー入力を1ms待って、k が27（ESC）だったらBreakする
+
+    
+
     k = cv2.waitKey(1)
     if k == 27:
         break
