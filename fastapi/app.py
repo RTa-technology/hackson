@@ -66,8 +66,13 @@ async def handle_events_image(flag, original_image_url, preview_image_url):
 
 # octet-streamで送られてくる画像を受け取る
 @app.post("/send/{flag}")
-async def send(request: Request, flag: int): 
-    _bytes = np.frombuffer(request.data, np.uint8)
+async def send(request: Request, flag: int):
+    
+    # application/octet-streamで送られてくるバイナリデータを受け取る
+    body = await request.body()
+
+
+    _bytes = np.frombuffer(body, np.uint8)
     img = cv2.imdecode(_bytes, flags=cv2.IMREAD_COLOR)
 
     filelink = upload_image(img)
