@@ -1,0 +1,15 @@
+version: '3.8'
+# raspiで動かす
+
+services:
+  opencv:
+    build:
+      context: ./opencv
+      dockerfile: Dockerfile
+    volumes:
+      - ./opencv:/opencv
+    restart: always
+    devices:
+      - /dev/video0:/dev/video0
+    
+  
