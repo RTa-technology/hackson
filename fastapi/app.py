@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Request, BackgroundTasks,UploadFile
 from linebot import WebhookParser
 from linebot.models import TextMessage, ImageSendMessage, TextSendMessage
-from imgurpython import ImgurClient
+
+from gyazo import Api
 from aiolinebot import AioLineBotApi
 from urllib import request
 import json
@@ -23,7 +24,7 @@ load_dotenv(dotenv_path)
 line_api = AioLineBotApi(channel_access_token=os.environ.get("TOKEN"))
 parser = WebhookParser(channel_secret=os.environ.get("CHANNEL_SECRET"))
 
-imgur_client = ImgurClient(os.environ.get("IMGUR_CLIENT_ID"), os.environ.get("IMGUR_CLIENT_SECRET"))
+client = Api(access_token=os.environ.get("GYAZO_TOKEN"))
 
 # FastAPIの起動
 app = FastAPI()
@@ -32,10 +33,13 @@ app = FastAPI()
 # 画像アップロード
 def upload_image(file):
     # 一時的に保存
+    image = {}
     with open("image.jpg", "wb") as f:
         f.write(file.read())
     # アップロード
-    image = imgur_client.upload_from_path("image.jpg", anon=True)
+    with open("image.jpg", "rb") as f:
+        image = client.upload_image(f)
+    print(image.to_json())
     # 一時的に保存した画像を削除
     os.remove("image.jpg")
     return image["link"]

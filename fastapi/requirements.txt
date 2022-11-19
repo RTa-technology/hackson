@@ -3,7 +3,7 @@ uvicorn
 aiolinebot
 line-bot-sdk
 python-dotenv
-imgurpython
 python-multipart
 numpy
 opencv-python
+python-gyazo
